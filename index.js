@@ -20,8 +20,8 @@ function savePoints(map) {
 
 const invites = new Map();
 const userPoints = loadPoints();
-const inviteLogChannelId = '1492863388135460935';
-const prizeLogChannelId = '1503364834106933308';
+const inviteLogChannelId = '1512876323087978628';
+const prizeLogChannelId = '1512876274291445840';
 
 client.once('ready', async () => {
     console.log(`${client.user.tag} جاهز!`);
