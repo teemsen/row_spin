@@ -245,9 +245,9 @@ const prizes = {
         { prize: '2M', chance: 5 },          // 5%
         { prize: '3M', chance: 5 },          // 5%
         { prize: '5M', chance: 1 },          // 1%
-        { prize: '10M', chance: 0.00001 },   // 0.00001%
-        { prize: '25M', chance: 0.00001 },   // 0.00001%
-        { prize: '15m', chance: 0.00001 }  // 0.00001%
+        { prize: '5M', chance: 0.00001 },   // 0.00001%
+        { prize: '5M', chance: 0.00001 },   // 0.00001%
+        { prize: '5m', chance: 0.00001 }  // 0.00001%
     ]
 };
 
