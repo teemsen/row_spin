@@ -233,18 +233,18 @@ client.on('interactionCreate', async interaction => {
 const prizes = {
     normal: [
         { prize: '200k', chance: 50 },       // 50%
-        { prize: '300k', chance: 30 },       // 30%
-        { prize: '600k', chance: 10 },       // 10%
-        { prize: '1M', chance: 1 },          // 1%
+        { prize: '300k', chance: 40 },       // 40%
+        { prize: '600k', chance: 1 },       // 1%
+        { prize: '1M', chance: 0.1 },          // 0.1%
         { prize: '2M', chance: 0.00001 },    // 0.00001%
     ],
     super: [
         { prize: '400k', chance: 50 },       // 50%
         { prize: '500k', chance: 30 },       // 30%
-        { prize: '1M', chance: 10 },         // 10%
-        { prize: '2M', chance: 5 },          // 5%
-        { prize: '3M', chance: 5 },          // 5%
-        { prize: '5M', chance: 1 },          // 1%
+        { prize: '1M', chance: 7 },         // 7%
+        { prize: '2M', chance: 1 },          // 1%
+        { prize: '3M', chance: 0.01 },          // 0.01%
+        { prize: '5M', chance: 0.01 },          // 0.01%
         { prize: '5M', chance: 0.00001 },   // 0.00001%
         { prize: '5M', chance: 0.00001 },   // 0.00001%
         { prize: '5m', chance: 0.00001 }  // 0.00001%
