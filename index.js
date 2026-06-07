@@ -240,15 +240,15 @@ const prizes = {
         { prize: '1m ', chance: 0.00001 },    // 0.00001%
     ],
     super: [
-        { prize: '400k', chance: 50 },       // 50%
-        { prize: '500k', chance: 30 },       // 30%
-        { prize: '1M', chance: 7 },         // 7%
-        { prize: '2M', chance: 1 },          // 1%
-        { prize: '3M', chance: 0.01 },          // 0.01%
-        { prize: '5M', chance: 0.01 },          // 0.01%
-        { prize: '5M', chance: 0.00001 },   // 0.00001%
-        { prize: '5M', chance: 0.00001 },   // 0.00001%
-        { prize: '5m', chance: 0.00001 }  // 0.00001%
+        { prize: '200k', chance: 50 },       // 50%
+        { prize: '300k', chance: 30 },       // 30%
+        { prize: '400k', chance: 7 },         // 7%
+        { prize: '10m', chance: 0.000000001 },          // 0.000000001%
+        { prize: '1m', chance: 0.000000001 },          // 0.000000001%
+        { prize: '400k', chance: 0.01 },          // 0.01%
+        { prize: '400k', chance: 0.00001 },   // 0.00001%
+        { prize: '400k', chance: 0.00001 },   // 0.00001%
+        { prize: '400k', chance: 0.00001 }  // 0.00001%
     ]
 };
 
