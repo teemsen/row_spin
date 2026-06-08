@@ -58,30 +58,24 @@ client.once('ready', async () => {
     console.log('تم تسجيل أوامر Slash.');
 });
 client.on('guildMemberAdd', async member => {
+    if (member.user.bot) return;
     const guild = member.guild;
     const newInvites = await guild.invites.fetch();
-    const oldInvites = invites;
+    const channel = guild.channels.cache.get(inviteLogChannelId);
     const usedInvite = newInvites.find(invite => {
-        const oldUses = oldInvites.get(invite.code) || 0;
+        const oldUses = invites.get(invite.code) || 0;
         return invite.uses > oldUses;
     });
-    const channel = guild.channels.cache.get(inviteLogChannelId);
-    if (usedInvite) {
+    if (usedInvite && usedInvite.inviter) {
         const inviter = usedInvite.inviter;
         const currentPoints = userPoints.get(inviter.id) || 0;
-        if (!member.user.bot && inviter) {
-            if (userPoints.has(member.id)) {
-                if (channel) {
-                    channel.send(`مرحبًا <@${inviter.id}>! هذا العضو <@${member.id}> تمت دعوته من قبل، لن تحصل على نقاط إضافية ☹️`);
-                }
-            } else {
-                userPoints.set(inviter.id, currentPoints + 1);
-                userPoints.set(member.id, 0);
-                savePoints(userPoints);
-                if (channel) {
-                    channel.send(`مرحبًا <@${inviter.id}>! لقد دعوت <@${member.id}> إلى السيرفر. نقاطك الآن: ${currentPoints + 1} 🔥`);
-                }
-            }
+        if (userPoints.has(member.id)) {
+            if (channel) channel.send(`⚠️ <@${inviter.id}> هذا العضو <@${member.id}> سبق دخل السيرفر، لن تحصل على نقاط.`);
+        } else {
+            userPoints.set(inviter.id, currentPoints + 1);
+            userPoints.set(member.id, 0);
+            savePoints(userPoints);
+            if (channel) channel.send(`✅ <@${inviter.id}> دعوت <@${member.id}> إلى السيرفر! نقاطك الآن: ${currentPoints + 1} 🔥`);
         }
     }
     newInvites.forEach(invite => {
@@ -99,12 +93,12 @@ client.on('messageCreate', async message => {
         const currentPoints = userPoints.get(member.id) || 0;
         userPoints.set(member.id, currentPoints + pointsToAdd);
         savePoints(userPoints);
-        message.reply(`✅ تم إضافة ${pointsToAdd} نقطة لـ <@${member.id}>. النقاط الحالية: ${currentPoints + pointsToAdd}`);
+        return message.reply(`✅ تم إضافة ${pointsToAdd} نقطة لـ <@${member.id}>. النقاط الحالية: ${currentPoints + pointsToAdd}`);
     }
     if (message.content.startsWith('+points')) {
         const member = message.mentions.members.first() || message.member;
         const currentPoints = userPoints.get(member.id) || 0;
-        message.reply(`📊 نقاط <@${member.id}>: ${currentPoints}`);
+        return message.reply(`📊 نقاط <@${member.id}>: ${currentPoints}`);
     }
     if (message.content === '+spin') {
         const userPointsCount = userPoints.get(message.author.id) || 0;
@@ -124,7 +118,7 @@ client.on('messageCreate', async message => {
                 { type: 2, label: 'لف العجلة السوبر', style: 4, custom_id: 'super_spin' }
             ]
         };
-        await message.reply({ embeds: [embed], components: [row] });
+        return message.reply({ embeds: [embed], components: [row] });
     }
 });
 client.on('interactionCreate', async interaction => {
@@ -152,19 +146,20 @@ client.on('interactionCreate', async interaction => {
     const userPointsCount = userPoints.get(interaction.user.id) || 0;
     const prizeChannel = interaction.guild.channels.cache.get(prizeLogChannelId);
     if (interaction.customId === 'normal_spin') {
-        if (userPointsCount < 1) return interaction.reply('❌ ليس لديك نقاط كافية.');
+        if (userPointsCount < 1) return interaction.reply({ content: '❌ ليس لديك نقاط كافية.', ephemeral: true });
         userPoints.set(interaction.user.id, userPointsCount - 1);
         savePoints(userPoints);
         const prize = getRandomPrize('normal');
         if (prizeChannel) prizeChannel.send(`> 🥳 مبروك <@${interaction.user.id}>! لقد فزت بـ **${prize}** 🏆`);
-        interaction.reply(`🎉 مبروك <@${interaction.user.id}>! لقد فزت بـ **${prize}**! 🏆`);
-    } else if (interaction.customId === 'super_spin') {
-        if (userPointsCount < 2) return interaction.reply('❌ ليس لديك نقاط كافية.');
+        return interaction.reply(`🎉 مبروك <@${interaction.user.id}>! لقد فزت بـ **${prize}**! 🏆`);
+    }
+    if (interaction.customId === 'super_spin') {
+        if (userPointsCount < 2) return interaction.reply({ content: '❌ ليس لديك نقاط كافية.', ephemeral: true });
         userPoints.set(interaction.user.id, userPointsCount - 2);
         savePoints(userPoints);
         const prize = getRandomPrize('super');
         if (prizeChannel) prizeChannel.send(`> 🥳 مبروك <@${interaction.user.id}>! لقد فزت بـ **${prize}** 🏆`);
-        interaction.reply(`🎉 مبروك <@${interaction.user.id}>! لقد فزت بـ **${prize}**! 🏆`);
+        return interaction.reply(`🎉 مبروك <@${interaction.user.id}>! لقد فزت بـ **${prize}**! 🏆`);
     }
 });
 const prizes = {
