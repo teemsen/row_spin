@@ -245,10 +245,10 @@ const prizes = {
         { prize: '400k', chance: 7 },         // 7%
         { prize: '10m', chance: 0.000000001 },          // 0.000000001%
         { prize: '1m', chance: 0.000000001 },          // 0.000000001%
-        { prize: '1m', chance: 0.01 },          // 0.01%
-        { prize: '1m', chance: 0.00001 },   // 0.00001%
-        { prize: '1m', chance: 0.00001 },   // 0.00001%
-        { prize: '1m', chance: 0.00001 }  // 0.00001%
+        { prize: '10', chance: 0.01 },          // 0.01%
+        { prize: '8m', chance: 0.00001 },   // 0.00001%
+        { prize: '2m', chance: 0.00001 },   // 0.00001%
+        { prize: '5m', chance: 0.00001 }  // 0.00001%
     ]
 };
 
