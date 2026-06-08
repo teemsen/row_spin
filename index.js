@@ -237,7 +237,7 @@ const prizes = {
         { prize: '500k', chance: 20 },       // 20%
         { prize: '750k', chance: 1 },       // 1%
         { prize: '1M', chance: 0.1 },          // 0.1%
-        { prize: '1m ', chance: 0.00001 },    // 0.00001%
+        { prize: '10m ', chance: 0.00001 },    // 0.00001%
     ],
     super: [
         { prize: '200k', chance: 50 },       // 50%
